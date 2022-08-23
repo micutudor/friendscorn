@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://tudor:54iZ0e3XFYfO9QNm@cluster0.ui1htjd.mongodb.net/?retryWrites=true&w=majority');
 
 const reviewSchema = mongoose.Schema({
     text: String,
