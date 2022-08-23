@@ -1,0 +1,38 @@
+<%
+
+let loggedIn = false;
+
+if (typeof session !== 'undefined')
+    loggedIn = session.loggedIn;
+
+%>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">🍿 Friendscorn</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <% if (loggedIn) { %>
+              <li class="nav-item ms-2">
+                <a class="nav-link <%= (page.activePage === 'feed') ? ('active') : ('') %>" href="/"><i class="fa-solid fa-message me-2"></i>Feed</a>
+              </li>
+              <li class="nav-item ms-2">
+                <a class="nav-link <%= (page.activePage === 'friends') ? ('active') : ('') %>" href="/friends"><i class="fa-solid fa-user-group me-2"></i>Friends</a>
+              </li>
+              <li class="nav-item ms-2">
+                <a class="nav-link <%= (page.activePage === 'my-profile') ? ('active') : ('') %>" href="/my-profile"><i class="fa-solid fa-user-ninja me-2"></i>My profile</a>
+              </li>
+          <% } else { %>
+              <li class="nav-item">
+                <a class="btn btn-secondary" href="/auth/sign-up">Sign up</a>
+              </li>
+              <li class="nav-item ms-2">
+                <a class="nav-link" href="/auth/log-in">Log in</a>
+              </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>

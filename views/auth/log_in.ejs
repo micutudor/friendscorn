@@ -1,0 +1,18 @@
+<%- include('../templates/head.ejs', {page}) %>
+<body>
+    <%- include('../templates/navbar.ejs', {page}) %>
+    <div class="container mt-3">
+        <% if (locals.alert) { %>
+            <div class="alert alert-danger mb-3" role="alert">
+                <%= alert.message %>
+            </div>
+        <% } %>
+        <form method="post" action="/auth/log-in">
+            <input class="form-control" type="email" name="email" placeholder="Email" required />
+            <input class="form-control mt-3" type="password" name="password" placeholder="Password" required />
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary mt-3" type="submit">Log in</button>
+            </div>
+        </form>
+    </div>
+    <%- include('../templates/footer.ejs', {page}) %>

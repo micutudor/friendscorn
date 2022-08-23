@@ -1,0 +1,108 @@
+<%- include('./templates/head.ejs', {page}) %>
+<%
+    let friends = [], friendshipRequests = [];
+    
+    for (friend of friendshipsData) {
+        if (session.user.friendships.includes(String(friend._id))) {
+            friends.push(friend);
+        }
+        else {
+            friendshipRequests.push(friend);
+        }
+    }
+%>
+<body>
+    <%- include('./templates/navbar.ejs', {page, session}) %>
+
+    <div class="container mt-3">
+        <div class="row">
+          <div class="col-10">
+            <h3>Friends</h3>
+          </div>
+          <div class="col">
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user-plus me-2"></i>Add friend</button>
+            </div>
+          </div>
+        </div>
+
+        <% if (locals.alert) { %>
+          <div class="alert alert-danger mt-3" role="alert">
+              <%= alert.message %>
+          </div>
+        <% } %>
+
+        <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="friends-tab" data-bs-toggle="tab" data-bs-target="#friends" type="button" role="tab" aria-controls="friends" aria-selected="true"><i class="fa-solid fa-users me-2"></i>My friends</button>
+          </li>
+          <li class="nav-item" role="presentation">
+          <button class="nav-link" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" type="button" role="tab" aria-controls="requests" aria-selected="false"><i class="fa-solid fa-bell me-2"></i>Friend requests</button>
+          </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="friends" role="tabpanel" aria-labelledby="friends-tab">
+                <% 
+                  for (friend of friends) {
+                %>
+                      <div class="row">
+                        <div class="col-lg-10">
+                          <h3><a href="profile/<%= friend._id %>"><%= friend.username %></a></h3>
+                          <p><%= friend.email %></p>
+                        </div>
+                        <div class="col">
+                          <div class="d-flex justify-content-end">
+                            <a href="friends/remove/<%= friend._id %>" class="btn btn-danger" ><i class="fa-solid fa-user-xmark me-2"></i>Remove friend</a>
+                          </div>
+                        </div>
+                      </div>
+                      <hr/>
+                <%
+                  } 
+                %> 
+            </div>
+            <div class="tab-pane fade" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+                <% 
+                  for (friend of friendshipRequests) {
+                %>
+                      <div class="row">
+                        <div class="col-lg-11">
+                          <h3><a href="profile/<%= friend._id %>"><%= friend.username %></a></h3>
+                          <p><%= friend.email %></p>
+                        </div>
+                        <div class="col">
+                          <div class="d-flex justify-content-end">
+                            <a href="friends/add/<%= friend._id %>" class="btn btn-primary" ><i class="fa-solid fa-user-check me-2"></i>Accept</a>
+                          </div>
+                        </div>
+                      </div>
+                      <hr/>
+                <%
+                  } 
+                %> 
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form method="post" action="/friends/add">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input class="form-control" type="email" name="email" placeholder="Friend e-mail" required />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add friend</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <%- include('./templates/footer.ejs', {page}) %>
