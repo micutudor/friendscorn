@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/moviesDiscovery');
+mongoose.connect('mongodb+srv://tudor:54iZ0e3XFYfO9QNm@cluster0.ui1htjd.mongodb.net/?retryWrites=true&w=majority');
 
 const userSchema = mongoose.Schema({
     username: {
