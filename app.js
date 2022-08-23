@@ -125,4 +125,4 @@ const reviewRouter = require('./routes/review');
 const review = require('./models/review');
 app.use('/review', reviewRouter);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
